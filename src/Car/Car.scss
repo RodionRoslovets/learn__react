@@ -1,0 +1,26 @@
+.car{
+    width:400px;
+    margin:auto;
+    padding-top:20px;
+    border-radius:5px;
+    margin-bottom:10px;
+    transition:border, box-shadow .3s linear;
+}
+
+
+.input {
+    width:90%;
+}
+
+.input.green{
+    border:1px solid darken(green, 10%);
+}
+
+.input.red{
+    border: 1px solid red;
+}
+
+.input.bold{
+    border:2px solid green;
+    font-weight:bold;
+}
