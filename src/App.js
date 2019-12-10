@@ -1,29 +1,33 @@
 import React from 'react';
 import './App.scss';
 import Car from './Car/Car';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends React.Component{
-  state = {
-    cars:[
-      {
-        name:'Ford',
-        year:'2018'
-      },
-      {
-        name:'Audi',
-        year:'2015' 
-      },
-      {
-        name:'Mazda',
-        year:'2011'
-      }
-    ],
-    pageTitle:'React components',
-    showCars:false,
-    style:{
-      border:'4px'
-    }
-  };
+
+  constructor(props){
+    console.log('App constructor');
+    super(props)
+
+    this.state = {
+      cars:[
+        {
+          name:'Ford',
+          year:'2018'
+        },
+        {
+          name:'Audi',
+          year:'2015' 
+        },
+        {
+          name:'Mazda',
+          year:'2011'
+        }
+      ],
+      pageTitle:'React components',
+      showCars:false
+    };
+  }
 
   toggleCarsHandler = () => {
     this.setState({
@@ -57,31 +61,41 @@ class App extends React.Component{
     fontSize:'20px',
     textAlign:'center'
   };
+
+  componentWillMount(){
+    console.log('App componentWillMount');
+  }
+  
+  componentDidMount(){
+    console.log('App componentDidMount');
+  }
   
   render(){
-    
+    console.log('App render');
     let cars = this.state.cars;
 
-    let cars2 = false;
+    let cars2;
 
     if(this.state.showCars){
       cars2 = cars.map((car, ind)=>{
         return(
-          <Car 
-          mouseover={this.mousehandler}
-          key={ind} 
-          name={car.name}
-          year={car.year}
-          onDelete={this.deleteHandler.bind(this, ind)}
-          onChangeName={(e) => this.onChangeName(e.target.value, ind)}
-          />
+          <ErrorBoundary key={ind}>
+            <Car 
+            mouseover={this.mousehandler}
+            name={car.name}
+            year={car.year}
+            onDelete={this.deleteHandler.bind(this, ind)}
+            onChangeName={(e) => this.onChangeName(e.target.value, ind)}
+            />
+          </ErrorBoundary>
         )           
       });
     }
     
     return (
       <div className="App" style={this.styles}>
-        <h1 style={{color:'blue'}}>{this.state.pageTitle}</h1>
+        
+        <h1>{this.props.title}</h1>
         
         <button onClick={this.toggleCarsHandler}>Toggle cars</button>
         
